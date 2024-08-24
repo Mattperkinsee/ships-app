@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import useEnhancedEffect from '@mui/utils/useEnhancedEffect';
-
+import PropTypes from "prop-types"; 
 // https://github.com/mui/material-ui/blob/master/packages/mui-base/src/NoSsr/NoSsr.tsx
 // without prop-types
 export function NoSsr(props) {
@@ -23,3 +23,9 @@ export function NoSsr(props) {
 
   return <React.Fragment>{mountedState ? children : fallback}</React.Fragment>;
 }
+
+NoSsr.propTypes = {
+  children: PropTypes.node.isRequired,
+  defer: PropTypes.node.isRequired,
+  fallback: PropTypes.node.isRequired,
+};

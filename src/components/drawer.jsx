@@ -6,22 +6,18 @@ import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { ShipContext } from "../context/ship-context";
 import { TextField } from "@mui/material";
 import UpgradeTable from "./ship-upgrades/valor-upgrade-table";
+import { ThemeContext } from "../context/ThemeContext";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 const drawerWidth = 300;
 
@@ -73,6 +69,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const { colorMode, toggleColorMode } = React.useContext(ThemeContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -105,7 +102,7 @@ export default function PersistentDrawerLeft() {
         setGearDataState(localGearData);
       } else {
         const gearData = await fetch(
-          "/assets/data/ships/valor/gearData.json"
+          "./assets/data/ships/valor/gearData.json"
         ).then((response) => response.json());
         setGearDataState(gearData);
         localStorage.setItem("gearData", JSON.stringify(gearData));
@@ -115,7 +112,7 @@ export default function PersistentDrawerLeft() {
         setItemDataState(localItemData);
       } else {
         const itemData = await fetch(
-          "/assets/data/ships/valor/itemData.json"
+          "./assets/data/ships/valor/itemData.json"
         ).then((response) => response.json());
         setItemDataState(itemData);
         localStorage.setItem("itemData", JSON.stringify(itemData));
@@ -126,7 +123,7 @@ export default function PersistentDrawerLeft() {
         console.log("expandeddata1", localExpandedData);
       } else {
         const expandedData = await fetch(
-          "/assets/data/ships/valor/expandedData.json"
+          "./assets/data/ships/valor/expandedData.json"
         ).then((response) => response.json());
         console.log("expandeddata2", expandedData);
         setExpandedDataState(expandedData);
@@ -135,9 +132,12 @@ export default function PersistentDrawerLeft() {
 
       // Calculate the initial total percentage
       calculateTotalPercentage(
-        localGearData || gearData,
-        localItemData || itemData,
-        localExpandedData || expandedData
+        localGearData,
+        localItemData,
+        localExpandedData
+        // localGearData || gearData,
+        // localItemData || itemData,
+        // localExpandedData || expandedData
       );
     };
 
@@ -215,9 +215,9 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          {/* <Typography variant="h6" noWrap component="div">
             Persistent drawer
-          </Typography>
+          </Typography> */}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -234,6 +234,16 @@ export default function PersistentDrawerLeft() {
         open={open}
       >
         <DrawerHeader>
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
+            <IconButton
+              color="inherit"
+              onClick={toggleColorMode}
+              aria-label="toggle color mode"
+            >
+              {colorMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+          </Box>
+
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
