@@ -1,0 +1,31 @@
+[
+  { "name": "Epheria Galleass", "count": 0, "max": 1, "image": "./assets/items/galleass.webp" },
+  {
+    "name": "+10 Epheria Galleass: Black Dragon Prow",
+    "count": 0,
+    "max": 1,
+    "expand": true,
+    "image": "./assets/items/black_dragon_prow.png"
+  },
+  {
+    "name": "+10 Epheria Galleass: Upgraded Plating (Blue)",
+    "count": 0,
+    "max": 1,
+    "expand": true,
+    "image": "./assets/items/upgraded_plating.png"
+  },
+  {
+    "name": "+10 Epheria Galleass: Mayna Cannon",
+    "count": 0,
+    "expand": true,
+    "max": 1,
+    "image": "./assets/items/mayna_cannon.png"
+  },
+  {
+    "name": "+10 Epheria Galleass: Stratus Wind Sail",
+    "count": 0,
+    "max": 1,
+    "expand": true,
+    "image": "./assets/items/stratus_wind_sail.png"
+  }
+]

@@ -1,0 +1,80 @@
+{
+  "+10 Epheria Galleass: Black Dragon Prow": [
+    {
+      "name": "+10 Epheria Galleass: White Horn Figurehead",
+      "count": 0,
+      "max": 1,
+      "image": "./assets/items/white_horn_prow.webp"
+    },
+    { "name": "Ruddy Manganese Nodule", "count": 0, "max": 50, "image": "./assets/items/ruddy_manganese_nodule.png" },
+    {
+      "name": "Enhanced Island Tree Coated Plywood",
+      "count": 0,
+      "max": 300,
+      "image": "./assets/items/enhanced_island_tree_coated_plywood.png"
+    },
+    { "name": "Seaweed Stalk", "count": 0, "max": 125, "image": "./assets/items/seaweed_stalk.png" },
+    { "name": "Great Ocean Dark Iron", "count": 0, "max": 150, "image": "./assets/items/great_ocean_dark_iron.png" }
+  ],
+  "+10 Epheria Galleass: Upgraded Plating (Blue)": [
+    {
+      "name": "Epheria Galleass: Enhanced Plating (Green) ",
+      "count": 0,
+      "max": 1,
+      "image": "./assets/items/enhanced_plating.webp"
+    },
+    { "name": "Pure Pearl Crystal ", "count": 0, "max": 45, "image": "./assets/items/pure_pearl_crystal.png" },
+    {
+      "name": "Cox Pirates' Artifact (Parley Beginner)",
+      "count": 0,
+      "max": 60,
+      "image": "./assets/items/cox_pirates_beginner.png"
+    },
+    {
+      "name": "Cox Pirates' Artifact (Combat)",
+      "count": 0,
+      "max": 125,
+      "image": "./assets/items/cox_pirates_combat.png"
+    },
+    { "name": "Moon Scale Plywood", "count": 0, "max": 300, "image": "./assets/items/moon_scale_plywood.png" }
+  ],
+  "+10 Epheria Galleass: Mayna Cannon": [
+    {
+      "name": "+10 Epheria Galleass: Verisha Cannon",
+      "count": 0,
+      "max": 1,
+      "image": "./assets/items/verisha_cannon.webp"
+    },
+    {
+      "name": "Tide-Dyed Standardized Timber Square",
+      "count": 0,
+      "max": 180,
+      "image": "./assets/items/tide_dyed_standardized_timber_square.webp"
+    },
+    {
+      "name": "Cox Pirates' Artifact (Combat)",
+      "count": 0,
+      "max": 125,
+      "image": "./assets/items/cox_pirates_combat.png"
+    },
+    { "name": "Moon Scale Plywood", "count": 0, "max": 300, "image": "./assets/items/moon_scale_plywood.png" },
+    { "name": "Bright Reef Piece", "count": 0, "max": 180, "image": "./assets/items/bright_reef_piece.png" }
+  ],
+  "+10 Epheria Galleass: Stratus Wind Sail": [
+    {
+      "name": "+10 Epheria Galleass: White Wind Sail",
+      "count": 0,
+      "max": 1,
+      "image": "./assets/items/white_wind_sail.webp"
+    },
+    { "name": "Ruddy Manganese Nodule", "count": 0, "max": 50, "image": "./assets/items/ruddy_manganese_nodule.png" },
+    {
+      "name": "Cox Pirates' Artifact (Parley Expert)",
+      "count": 0,
+      "max": 30,
+      "image": "./assets/items/cox_pirates_expert.png"
+    },
+    { "name": "Seaweed Stalk", "count": 0, "max": 125, "image": "./assets/items/seaweed_stalk.png" },
+    { "name": "Luminous Cobalt Ingot", "count": 0, "max": 30, "image": "./assets/items/luminous_cobalt_ingot.png" }
+  ]
+}
