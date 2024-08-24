@@ -1,0 +1,17 @@
+[
+  { "name": "Moon Vein Flax Fabric", "count": 0, "max": 180, "image": "./assets/items/moon_vein_flax_fabric.png" },
+  {
+    "name": "Deep Tide-Dyed Standardized Timber Square",
+    "count": 0,
+    "max": 170,
+    "image": "./assets/items/deep_tide_dyed_timber_square.png"
+  },
+  {
+    "name": "Brilliant Rock Salt Ingot",
+    "count": 0,
+    "max": 30,
+    "image": "./assets/items/brilliant_rock_salt_ingot.png"
+  },
+  { "name": "Tear of the Ocean", "count": 0, "max": 42, "image": "./assets/items/tear_of_the_ocean.png" },
+  { "name": "Brilliant Pearl Shard", "count": 0, "max": 30, "image": "./assets/items/brilliant_pearl_shard.png" }
+]
