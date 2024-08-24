@@ -18,6 +18,8 @@ import UpgradeTable from "./ship-upgrades/valor-upgrade-table";
 import { ThemeContext } from "../context/ThemeContext";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { Grid, Paper } from "@mui/material";
+import CustomTabs from "./tab-panel";
 
 const drawerWidth = 300;
 
@@ -67,17 +69,17 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function PersistentDrawerLeft() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  //   const theme = useTheme();
+  const [open, setOpen] = React.useState(true);
   const { colorMode, toggleColorMode } = React.useContext(ThemeContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  //   const handleDrawerClose = () => {
+  //     setOpen(false);
+  //   };
 
   const {
     gearDataState,
@@ -244,68 +246,78 @@ export default function PersistentDrawerLeft() {
             </IconButton>
           </Box>
 
-          <IconButton onClick={handleDrawerClose}>
+          {/* <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
               <ChevronRightIcon />
             )}
-          </IconButton>
+          </IconButton> */}
         </DrawerHeader>
         <Divider />
         {/* Unique Items */}
         <Box>
           {uniqueItems.map((item) => (
-            <Box
-              key={item.name}
-              sx={{
-                padding: "1rem",
-                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "space-between",
-                textAlign: "center",
-                marginBottom: "1rem", // Add spacing between items
-                minHeight: 200,
-              }}
-            >
+            <Paper elevation={3}>
               <Box
-                alt={item.name}
-                component="img"
-                src={item.image}
+                key={item.name}
                 sx={{
-                  width: "100%",
-                  height: "auto",
-                  maxWidth: 50,
-                  marginBottom: "1rem",
-                  objectFit: "contain",
+                  padding: "1rem",
+                  // boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  // justifyContent: "space-between",
+                  textAlign: "center",
+                  marginBottom: "1rem", // Add spacing between items
+                  // minHeight: 200,
                 }}
-              />
-              <Typography
-                gutterBottom
-                sx={{ fontWeight: "bold", fontSize: "0.9rem" }}
-                variant="body1"
               >
-                {item.name}
-              </Typography>
-              <TextField
-                inputProps={{ min: 0 }}
-                onChange={(e) =>
-                  handleInventoryInputChange(item.name, e.target.value)
-                }
-                sx={{ marginBottom: "0.5rem", width: "100%" }}
-                type="number"
-                value={item.count}
-              />
-            </Box>
+                <Typography
+                  gutterBottom
+                  sx={{ fontSize: "rem" }}
+                  variant="body1"
+                >
+                  {item.name}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem", // Adjust gap as needed between image and TextField
+                  }}
+                >
+                  <Box
+                    alt={item.name}
+                    component="img"
+                    src={item.image}
+                    sx={{
+                      width: "100%",
+                      height: "auto",
+                      maxWidth: 50,
+                      objectFit: "contain",
+                    }}
+                  />
+                  <TextField
+                    //   inputProps={{ min: 0 }}
+                    onChange={(e) =>
+                      handleInventoryInputChange(item.name, e.target.value)
+                    }
+                    sx={{ width: "100px" }}
+                    type="text"
+                    value={item.count}
+                  />
+                </Box>
+              </Box>
+            </Paper>
           ))}
         </Box>
         <Divider />
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <UpgradeTable />
+
+        <CustomTabs />
       </Main>
     </Box>
   );

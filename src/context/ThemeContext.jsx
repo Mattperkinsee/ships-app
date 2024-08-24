@@ -61,25 +61,14 @@ export const ThemeContextProvider = ({ children }) => {
         },
         typography: {
           fontFamily: [
-            'Montserrat', // Change to your preferred modern font
+            'Inter', // Change to your preferred modern font
             'Roboto', // Fallback font
             'Helvetica',
             'Arial',
             'sans-serif',
           ].join(','),
           // You can customize individual typography variants here
-          h1: {
-            fontFamily: 'Montserrat',
-            fontWeight: 700,
-          },
-          h2: {
-            fontFamily: 'Montserrat',
-            fontWeight: 600,
-          },
-          body1: {
-            fontFamily: 'Roboto',
-            fontWeight: 400,
-          },
+         
         },
       }),
     [colorMode]

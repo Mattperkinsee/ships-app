@@ -23,12 +23,13 @@ import {
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
 import CircularProgressWithLabel from "@/components/circular-progress";
-
+import { useTheme } from "@mui/material/styles";
 import { AppLimits } from "@/components/app-limits";
 import { ShipContext } from "@/context/ship-context";
 
 function DataTable({
   data,
+  theme,
   expandedRows,
   handleRowToggle,
   expandedData,
@@ -39,7 +40,7 @@ function DataTable({
   return (
     <TableContainer component={Paper}>
       <Table>
-        <TableHead>
+        <TableHead sx={{ backgroundColor: theme.palette.background.paper }}>
           <TableRow>
             <TableCell />
             <TableCell>Name</TableCell>
@@ -172,7 +173,7 @@ export default function UpgradeTable() {
     expandedRowsInitial,
     setExpandedRowsInitial,
   } = useContext(ShipContext);
-
+  const theme = useTheme();
   // const [gearDataState, setGearDataState] = useState(null);
   // const [itemDataState, setItemDataState] = useState(null);
   // const [expandedDataState, setExpandedDataState] = useState(null);
@@ -327,31 +328,22 @@ export default function UpgradeTable() {
   }, []);
 
   return (
-    <Box sx={{ padding: "2rem" }}>
+    <Box sx={{ padding: "0rem" }}>
       <Grid alignItems="center" container spacing={2}>
         <Grid item md={4} xs={12}>
-          <Typography gutterBottom variant="h4">
-            Valor Ship Upgrade Materials
-          </Typography>
-          <Button
-            color="primary"
-            onClick={openInventoryModal}
-            startIcon={<BackpackIcon />}
-            variant="contained"
-          >
-            Inventory
-          </Button>
+        
         </Grid>
         <Grid item md={4} sx={{ textAlign: { xs: "left" } }} xs={12}>
           <AppLimits usage={progressPercent} />
         </Grid>
       </Grid>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{position:'relative', top: '-50px'}}>
         <Grid item md={6} xs={12}>
           {gearDataState ? (
             <DataTable
               data={gearDataState}
+              theme={theme}
               expandedRows={expandedRowsGear}
               // handleInputChange={(name, value, isEditing) => handleInputChange(name, value, isEditing, true)}
               handleRowToggle={(name) =>
@@ -369,6 +361,7 @@ export default function UpgradeTable() {
           {itemDataState ? (
             <DataTable
               data={itemDataState}
+              theme={theme}
               expandedRows={expandedRowsInitial}
               // handleInputChange={(name, value, isEditing) => handleInputChange(name, value, isEditing, false)}
               handleRowToggle={(name) =>
@@ -387,76 +380,6 @@ export default function UpgradeTable() {
           ) : null}
         </Grid>
       </Grid>
-      <Dialog
-        fullScreen
-        onClose={closeInventoryModal}
-        open={isInventoryModalOpen}
-      >
-        <DialogTitle>
-          Inventory
-          <IconButton
-            aria-label="close"
-            color="inherit"
-            edge="end"
-            onClick={closeInventoryModal}
-            sx={{ position: "absolute", right: 8, top: 8 }}
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <Grid container spacing={2}>
-            {uniqueItems.map((item) => (
-              <Grid item key={item.name} lg={2} md={3} sm={6} xs={12}>
-                <Box
-                  sx={{
-                    border: "1px solid #ddd",
-                    padding: "1rem",
-                    borderRadius: "8px",
-                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    textAlign: "center",
-                    height: "100%", // Ensure the box takes up the full height of the grid item
-                    minHeight: 200, // Set a consistent minimum height for all boxes
-                  }}
-                >
-                  <Box
-                    alt={item.name}
-                    component="img"
-                    src={item.image}
-                    sx={{
-                      width: "100%",
-                      height: "auto",
-                      maxWidth: 50,
-                      marginBottom: "1rem",
-                      objectFit: "contain",
-                    }}
-                  />
-                  <Typography
-                    gutterBottom
-                    sx={{ fontWeight: "bold", fontSize: "0.9rem" }}
-                    variant="body1"
-                  >
-                    {item.name}
-                  </Typography>
-                  <TextField
-                    inputProps={{ min: 0 }}
-                    onChange={(e) =>
-                      handleInventoryInputChange(item.name, e.target.value)
-                    }
-                    sx={{ marginBottom: "0.5rem", width: "100%" }} // Ensure the input field takes up the full width
-                    type="number"
-                    value={item.count}
-                  />
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </DialogContent>
-      </Dialog>
     </Box>
   );
 }

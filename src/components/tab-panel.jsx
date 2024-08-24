@@ -1,30 +1,40 @@
-// src/CustomTabs.jsx
-import React, { useState } from 'react';
-import { Tabs, Tab, Box, Typography } from '@mui/material';
-import ValorUpgradeTable from './ship-upgrades/valor-upgrade-table';
-
-function TabPanel(props) {
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import ValorUpgradeTable from "../components/ship-upgrades/valor-upgrade-table"
+function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`tabpanel-${index}`}
-      aria-labelledby={`tab-${index}`}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
 
-export default function CustomTabs() {
-  const [value, setValue] = useState(0);
+CustomTabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+export default function BasicTabs() {
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -32,20 +42,22 @@ export default function CustomTabs() {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Tabs value={value} onChange={handleChange} aria-label="custom tabs">
-        <Tab label="Valor" id="tab-0" aria-controls="tabpanel-0" />
-        <Tab label="Volante" id="tab-1" aria-controls="tabpanel-1" />
-        <Tab label="Advance" id="tab-2" aria-controls="tabpanel-2" />
-      </Tabs>
-      <TabPanel value={value} index={0}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="Valor" {...a11yProps(0)} />
+          <Tab label="Volante" {...a11yProps(1)} />
+          <Tab label="Advance" {...a11yProps(2)} />
+        </Tabs>
+      </Box>
+      <CustomTabPanel value={value} index={0}>
         <ValorUpgradeTable/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Content for Volante
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Content for Advance
-      </TabPanel>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        Item Two
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        Item Three
+      </CustomTabPanel>
     </Box>
   );
 }

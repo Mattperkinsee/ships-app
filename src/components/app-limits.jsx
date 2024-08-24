@@ -7,12 +7,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { RadialBar, RadialBarChart } from 'recharts';
 import PropTypes from "prop-types"; 
+import { useTheme } from '@mui/material/styles'; //
 
 import { NoSsr } from '@/components/no-ssr';
 
 export function AppLimits({ usage }) {
+  const theme = useTheme();
   const chartSize = 240;
-
+  console.log('usage', usage)
   const data = [
     { name: 'Empty', value: 100 },
     { name: 'Usage', value: usage },
@@ -32,7 +34,7 @@ export function AppLimits({ usage }) {
           }}
         >
           <RadialBarChart
-            barSize={24}
+            barSize={12}
             data={data}
             endAngle={-10}
             height={chartSize}
@@ -46,7 +48,7 @@ export function AppLimits({ usage }) {
               cornerRadius={10}
               dataKey="value"
               endAngle={-320}
-              fill="var(--mui-palette-primary-main)"
+              fill={theme.palette.primary.main} 
               startAngle={20}
             />
           </RadialBarChart>
