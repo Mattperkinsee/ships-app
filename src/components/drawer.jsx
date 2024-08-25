@@ -67,12 +67,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   //   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+//   const [open, setOpen] = React.useState(true);
   const { colorMode, toggleColorMode } = React.useContext(ThemeContext);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+//   const handleDrawerOpen = () => {
+//     setOpen(true);
+//   };
 
   const {
     gearDataState,
@@ -229,7 +229,7 @@ export default function PersistentDrawerLeft() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={"true"}>
         <Toolbar>
           {/* <IconButton
             color="inherit"
@@ -279,7 +279,7 @@ export default function PersistentDrawerLeft() {
         {/* Unique Items */}
         <Box>
           {uniqueItems.map((item) => (
-            <Paper elevation={3} key={item.name}>
+            <Paper elevation={1} key={item.name}>
               <Box
                 sx={{
                   padding: "0.5rem",
