@@ -154,9 +154,7 @@ function DataTable({
 export default function UpgradeTable() {
   const {
     gearDataState,
-    setGearDataState,
     itemDataState,
-    setItemDataState,
     expandedDataState,
     progressPercent,
     expandedRowsGear,

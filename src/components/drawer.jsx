@@ -231,7 +231,7 @@ export default function PersistentDrawerLeft() {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -239,7 +239,17 @@ export default function PersistentDrawerLeft() {
             sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
+
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "right" }}>
+            <IconButton
+              color="inherit"
+              onClick={toggleColorMode}
+              aria-label="toggle color mode"
+            >
+              {colorMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+          </Box>
           {/* <Typography variant="h6" noWrap component="div">
             Persistent drawer
           </Typography> */}
@@ -264,17 +274,7 @@ export default function PersistentDrawerLeft() {
         anchor="left"
         open={open}
       >
-        <DrawerHeader>
-          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
-            <IconButton
-              color="inherit"
-              onClick={toggleColorMode}
-              aria-label="toggle color mode"
-            >
-              {colorMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
-          </Box>
-        </DrawerHeader>
+        <DrawerHeader></DrawerHeader>
         <Divider />
         {/* Unique Items */}
         <Box>
