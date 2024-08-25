@@ -1,7 +1,7 @@
 [
   { "name": "Epheria Galleass", "count": 0, "max": 1, "image": "./assets/items/galleass.webp" },
   {
-    "name": "+10 Epheria Galleass: Black Dragon Prow",
+    "name": "+10 Epheria Galleass: \n Black Dragon Prow",
     "count": 0,
     "max": 1,
     "expand": true,
