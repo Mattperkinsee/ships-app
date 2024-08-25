@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -183,17 +183,25 @@ export default function PersistentDrawerLeft() {
 
         if (Array.isArray(prevState)) {
           // This case handles gearDataState and itemDataState which are arrays
-          newData = prevState.map((item) =>
-            item.name === name ? { ...item, count: Number(value) } : item
-          );
+          newData = prevState.map((item) => {
+            if (item.name === name) {
+              const newValue = Math.min(Number(value), item.max);
+              return { ...item, count: newValue };
+            }
+            return item;
+          });
         } else if (typeof prevState === "object" && prevState !== null) {
           // This case handles expandedDataState which is an object with arrays as values
           newData = {
             ...prevState,
             ...Object.keys(prevState).reduce((acc, key) => {
-              acc[key] = prevState[key].map((item) =>
-                item.name === name ? { ...item, count: Number(value) } : item
-              );
+              acc[key] = prevState[key].map((item) => {
+                if (item.name === name) {
+                  const newValue = Math.min(Number(value), item.max);
+                  return { ...item, count: newValue };
+                }
+                return item;
+              });
               return acc;
             }, {}),
           };
@@ -244,6 +252,12 @@ export default function PersistentDrawerLeft() {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            // Hide scrollbar
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+            "-ms-overflow-style": "none", // For Internet Explorer and Edge
+            scrollbarWidth: "none", // For Firefox
           },
         }}
         variant="persistent"
@@ -268,20 +282,17 @@ export default function PersistentDrawerLeft() {
             <Paper elevation={3} key={item.name}>
               <Box
                 sx={{
-                  padding: "1rem",
-                  // boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                  padding: "0.5rem",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
-                  // justifyContent: "space-between",
                   textAlign: "center",
                   marginBottom: "1rem", // Add spacing between items
-                  // minHeight: 200,
                 }}
               >
                 <Typography
                   gutterBottom
-                  sx={{ fontSize: "rem" }}
+                  sx={{ fontSize: "0.95rem" }}
                   variant="body1"
                 >
                   {item.name}

@@ -37,8 +37,8 @@ function DataTable({
             <TableCell />
             <TableCell>Name</TableCell>
             <TableCell>Current</TableCell>
-            <TableCell>Required</TableCell>
-            <TableCell>Completion (%)</TableCell>
+            <TableCell>Need</TableCell>
+            <TableCell></TableCell>
             <TableCell />
           </TableRow>
         </TableHead>
@@ -46,7 +46,7 @@ function DataTable({
           {data.map((item) => {
             const itemKey = item.name;
             return (
-              <React.Fragment key={itemKey}>
+              <React.Fragment key={itemKey} >
                 <TableRow>
                   <TableCell>
                     <Box
@@ -89,20 +89,19 @@ function DataTable({
                       >
                         <Box sx={{ margin: 1 }}>
                           <Table size="small">
-                            <TableHead>
+                            <TableHead
+                              sx={{
+                                backgroundColor: theme.palette.primary.main,
+                              }}
+                            >
                               <TableRow>
                                 <TableCell>
-                                  {/* <Box
-                                    component="img"
-                                    src={item.image}
-                                    alt={item.name}
-                                    sx={{ width: 40, height: 40, objectFit: 'contain' }}
-                                  /> */}
+                         
                                 </TableCell>
                                 <TableCell>Sub-Parts</TableCell>
-                                <TableCell>Count</TableCell>
-                                <TableCell>Required</TableCell>
-                                <TableCell>Completion (%)</TableCell>
+                                <TableCell>Current</TableCell>
+                                <TableCell>Need</TableCell>
+                                <TableCell></TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -210,7 +209,7 @@ export default function UpgradeTable() {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} sx={{ position: "relative", top: '-85px' }}>
+      <Grid container spacing={2} sx={{ position: "relative", top: "-85px" }}>
         <Grid item md={6} xs={12}>
           {gearDataState ? (
             <DataTable
