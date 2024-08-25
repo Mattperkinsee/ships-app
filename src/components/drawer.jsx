@@ -10,15 +10,12 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { ShipContext } from "../context/ship-context";
 import { TextField } from "@mui/material";
-import UpgradeTable from "./ship-upgrades/valor-upgrade-table";
 import { ThemeContext } from "../context/ThemeContext";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { Grid, Paper } from "@mui/material";
+import { Paper } from "@mui/material";
 import CustomTabs from "./tab-panel";
 
 const drawerWidth = 300;
@@ -77,10 +74,6 @@ export default function PersistentDrawerLeft() {
     setOpen(true);
   };
 
-  //   const handleDrawerClose = () => {
-  //     setOpen(false);
-  //   };
-
   const {
     gearDataState,
     setGearDataState,
@@ -133,14 +126,7 @@ export default function PersistentDrawerLeft() {
       }
 
       // Calculate the initial total percentage
-      calculateTotalPercentage(
-        localGearData,
-        localItemData,
-        localExpandedData
-        // localGearData || gearData,
-        // localItemData || itemData,
-        // localExpandedData || expandedData
-      );
+      calculateTotalPercentage(localGearData, localItemData, localExpandedData);
     };
 
     loadInitialData();
@@ -186,21 +172,50 @@ export default function PersistentDrawerLeft() {
   }, []);
 
   const handleInventoryInputChange = (name, value) => {
-    const updateCount = (state, setState) => {
-      const newData = state.map((item) =>
-        item.name === name
-          ? { ...item, count: value === "" ? 0 : Number(value) }
-          : item
-      );
-      setState(newData);
+    console.log("name", name);
+    console.log("value", value);
+
+    if (!value || value === "") value = 0;
+
+    const updateCount = (state, setState, callback) => {
+      setState((prevState) => {
+        let newData;
+
+        if (Array.isArray(prevState)) {
+          // This case handles gearDataState and itemDataState which are arrays
+          newData = prevState.map((item) =>
+            item.name === name ? { ...item, count: Number(value) } : item
+          );
+        } else if (typeof prevState === "object" && prevState !== null) {
+          // This case handles expandedDataState which is an object with arrays as values
+          newData = {
+            ...prevState,
+            ...Object.keys(prevState).reduce((acc, key) => {
+              acc[key] = prevState[key].map((item) =>
+                item.name === name ? { ...item, count: Number(value) } : item
+              );
+              return acc;
+            }, {}),
+          };
+        }
+
+        if (callback) callback(newData);
+
+        return newData;
+      });
     };
 
-    updateCount(gearDataState, setGearDataState);
-    updateCount(itemDataState, setItemDataState);
-    updateCount(
-      expandedDataState ? Object.values(expandedDataState).flat() : [],
-      setExpandedDataState
-    );
+    updateCount(gearDataState, setGearDataState, (newGearData) => {
+      updateCount(itemDataState, setItemDataState, (newItemData) => {
+        updateCount(
+          expandedDataState,
+          setExpandedDataState,
+          (newExpandedData) => {
+            calculateTotalPercentage(newGearData, newItemData, newExpandedData);
+          }
+        );
+      });
+    });
   };
 
   return (
@@ -245,22 +260,13 @@ export default function PersistentDrawerLeft() {
               {colorMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
           </Box>
-
-          {/* <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton> */}
         </DrawerHeader>
         <Divider />
         {/* Unique Items */}
         <Box>
           {uniqueItems.map((item) => (
-            <Paper elevation={3}>
+            <Paper elevation={3} key={item.name}>
               <Box
-                key={item.name}
                 sx={{
                   padding: "1rem",
                   // boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
@@ -299,7 +305,7 @@ export default function PersistentDrawerLeft() {
                     }}
                   />
                   <TextField
-                    //   inputProps={{ min: 0 }}
+                    inputProps={{ min: 0 }}
                     onChange={(e) =>
                       handleInventoryInputChange(item.name, e.target.value)
                     }
@@ -316,7 +322,6 @@ export default function PersistentDrawerLeft() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-
         <CustomTabs />
       </Main>
     </Box>

@@ -1,14 +1,8 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import BackpackIcon from "@mui/icons-material/Backpack";
-import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
-  Button,
   Collapse,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   Grid,
   IconButton,
   Table,
@@ -17,8 +11,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
-  Typography,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
@@ -29,18 +21,18 @@ import { ShipContext } from "@/context/ship-context";
 
 function DataTable({
   data,
-  theme,
   expandedRows,
   handleRowToggle,
   expandedData,
   calculatePercentage,
 }) {
+  const theme = useTheme(); // Use theme here
   if (!data) return null; // Don't render the table if data is not loaded
 
   return (
     <TableContainer component={Paper}>
       <Table>
-        <TableHead sx={{ backgroundColor: theme.palette.background.paper }}>
+        <TableHead sx={{ backgroundColor: theme.palette.primary.main }}>
           <TableRow>
             <TableCell />
             <TableCell>Name</TableCell>
@@ -174,58 +166,6 @@ export default function UpgradeTable() {
     setExpandedRowsInitial,
   } = useContext(ShipContext);
   const theme = useTheme();
-  // const [gearDataState, setGearDataState] = useState(null);
-  // const [itemDataState, setItemDataState] = useState(null);
-  // const [expandedDataState, setExpandedDataState] = useState(null);
-  // const [expandedRowsGear, setExpandedRowsGear] = useState({});
-  // const [expandedRowsInitial, setExpandedRowsInitial] = useState({});
-  // const [progressPercent, setProgressPercent] = useState(0);
-  const [isInventoryModalOpen, setIsInventoryModalOpen] = useState(false);
-
-  // Load initial data from localStorage or JSON files
-  // useEffect(() => {
-  //   const loadInitialData = async () => {
-  //     const localGearData = JSON.parse(localStorage.getItem('gearData'));
-  //     const localItemData = JSON.parse(localStorage.getItem('itemData'));
-  //     const localExpandedData = JSON.parse(localStorage.getItem('expandedData'));
-
-  //     if (localGearData) {
-  //       setGearDataState(localGearData);
-  //     } else {
-  //       const gearData = await fetch('/assets/data/ships/valor/gearData.json').then((response) => response.json());
-  //       setGearDataState(gearData);
-  //       localStorage.setItem('gearData', JSON.stringify(gearData));
-  //     }
-
-  //     if (localItemData) {
-  //       setItemDataState(localItemData);
-  //     } else {
-  //       const itemData = await fetch('/assets/data/ships/valor/itemData.json').then((response) => response.json());
-  //       setItemDataState(itemData);
-  //       localStorage.setItem('itemData', JSON.stringify(itemData));
-  //     }
-
-  //     if (localExpandedData) {
-  //       setExpandedDataState(localExpandedData);
-  //     } else {
-  //       const expandedData = await fetch('/assets/data/ships/valor/expandedData.json').then((response) =>
-  //         response.json()
-  //       );
-  //       setExpandedDataState(expandedData);
-  //       localStorage.setItem('expandedData', JSON.stringify(expandedData));
-  //     }
-
-  //     // Calculate the initial total percentage
-  //     calculateTotalPercentage(localGearData || gearData, localItemData || itemData, localExpandedData || expandedData);
-  //   };
-
-  //   loadInitialData();
-  // }, []);
-
-  // Calculate total percentage whenever data changes
-  // useEffect(() => {
-  //   calculateTotalPercentage(gearDataState, itemDataState, expandedDataState);
-  // }, [gearDataState, itemDataState, expandedDataState]);
 
   // Save gearDataState to localStorage when it changes
   useEffect(() => {
@@ -249,36 +189,6 @@ export default function UpgradeTable() {
     }
   }, [expandedDataState]);
 
-  // const handleInputChange = (name, value, isEditing, isGearData) => {
-  //   const updateState = (state, setState) => {
-  //     const newData = state.map((item) =>
-  //       item.name === name ? { ...item, count: value === '' ? 0 : Number(value), isEditing } : item
-  //     );
-  //     setState(newData);
-  //   };
-
-  //   if (isGearData) {
-  //     updateState(gearDataState, setGearDataState);
-  //   } else {
-  //     updateState(itemDataState, setItemDataState);
-  //   }
-  // };
-
-  // const handleSubItemInputChange = (parentName, subItemName, value, isEditing) => {
-  //   const currentExpandedData = expandedDataState || {};
-
-  //   const updatedParentItems = (currentExpandedData[parentName] || []).map((subItem) =>
-  //     subItem.name === subItemName ? { ...subItem, count: value === '' ? 0 : Number(value), isEditing } : subItem
-  //   );
-
-  //   const updatedExpandedData = {
-  //     ...currentExpandedData,
-  //     [parentName]: updatedParentItems,
-  //   };
-
-  //   setExpandedDataState(updatedExpandedData);
-  // };
-
   const calculatePercentage = (count, max) => {
     const result = max > 0 ? (count / max) * 100 : 0;
     return parseFloat(result.toFixed(2));
@@ -291,68 +201,26 @@ export default function UpgradeTable() {
     }));
   };
 
-  // Handling Inventory Modal
-  const openInventoryModal = () => {
-    setIsInventoryModalOpen(true);
-  };
-
-  const closeInventoryModal = () => {
-    setIsInventoryModalOpen(false);
-  };
-
-  const handleInventoryInputChange = (name, value) => {
-    const updateCount = (state, setState) => {
-      const newData = state.map((item) =>
-        item.name === name
-          ? { ...item, count: value === "" ? 0 : Number(value) }
-          : item
-      );
-      setState(newData);
-    };
-
-    updateCount(gearDataState, setGearDataState);
-    updateCount(itemDataState, setItemDataState);
-    // updateCount(expandedDataState ? Object.values(expandedDataState).flat() : [], setExpandedDataState);
-  };
-
-  // Remove duplicates from items list
-  const uniqueItems = [
-    ...(gearDataState || []),
-    ...(itemDataState || []),
-    ...(expandedDataState ? Object.values(expandedDataState).flat() : []),
-  ].reduce((acc, item) => {
-    if (!acc.find((i) => i.name === item.name)) {
-      acc.push(item);
-    }
-    return acc;
-  }, []);
-
   return (
     <Box sx={{ padding: "0rem" }}>
       <Grid alignItems="center" container spacing={2}>
-        <Grid item md={4} xs={12}>
-        
-        </Grid>
+        <Grid item md={4} xs={12}></Grid>
         <Grid item md={4} sx={{ textAlign: { xs: "left" } }} xs={12}>
           <AppLimits usage={progressPercent} />
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} sx={{position:'relative', top: '-50px'}}>
+      <Grid container spacing={2} sx={{ position: "relative" }}>
         <Grid item md={6} xs={12}>
           {gearDataState ? (
             <DataTable
               data={gearDataState}
               theme={theme}
               expandedRows={expandedRowsGear}
-              // handleInputChange={(name, value, isEditing) => handleInputChange(name, value, isEditing, true)}
               handleRowToggle={(name) =>
                 handleRowToggle(name, setExpandedRowsGear, expandedRowsGear)
               }
               expandedData={expandedDataState || {}} // Ensure expandedDataState is not null
-              // handleSubItemInputChange={(parentName, subItemName, value, isEditing) =>
-              //   handleSubItemInputChange(parentName, subItemName, value, isEditing)
-              // }
               calculatePercentage={calculatePercentage}
             />
           ) : null}
@@ -363,7 +231,6 @@ export default function UpgradeTable() {
               data={itemDataState}
               theme={theme}
               expandedRows={expandedRowsInitial}
-              // handleInputChange={(name, value, isEditing) => handleInputChange(name, value, isEditing, false)}
               handleRowToggle={(name) =>
                 handleRowToggle(
                   name,
@@ -372,9 +239,6 @@ export default function UpgradeTable() {
                 )
               }
               expandedData={expandedDataState || {}} // Ensure expandedDataState is not null
-              // handleSubItemInputChange={(parentName, subItemName, value, isEditing) =>
-              //   handleSubItemInputChange(parentName, subItemName, value, isEditing)
-              // }
               calculatePercentage={calculatePercentage}
             />
           ) : null}
