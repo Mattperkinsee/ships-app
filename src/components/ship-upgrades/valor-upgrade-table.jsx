@@ -210,7 +210,7 @@ export default function UpgradeTable() {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} sx={{ position: "relative" }}>
+      <Grid container spacing={2} sx={{ position: "relative", top: '-85px' }}>
         <Grid item md={6} xs={12}>
           {gearDataState ? (
             <DataTable
